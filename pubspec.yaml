@@ -1,7 +1,8 @@
 name: secugen_plugin
-description: "A new Flutter project."
-version: 0.0.1
-homepage:
+description: "A new Flutter plugin to connect with Secugen device and access all the device features."
+version: 1.0.0
+repository: https://github.com/satishmscict/secugen_plugin
+homepage: https://github.com/satishmscict/secugen_plugin
 
 environment:
   sdk: ^3.5.0
@@ -37,7 +38,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.symetric.sms.secugen.secugen_plugin
+        package: com.secugen.secugen_plugin
         pluginClass: SecugenPlugin
 
 

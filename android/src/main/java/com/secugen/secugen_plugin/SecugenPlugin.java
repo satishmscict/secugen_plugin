@@ -1,4 +1,4 @@
-package com.symetric.sms.secugen.secugen_plugin;
+package com.secugen.secugen_plugin;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -50,7 +50,7 @@ import io.flutter.plugin.common.PluginRegistry;
 public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware, SGFingerPresentEvent {
 
     private static final String TAG = "SecuGen Lib";
-    private static final String CHANNEL = "com.fdxpro.secugenfplib/fingerprintReader";
+    private static final String CHANNEL = "com.secugen.secugen_plugin/fingerprintReader";
 
     private static int IMAGE_CAPTURE_TIMEOUT_MS = 5000;
     private static int IMAGE_CAPTURE_QUALITY = 70;
@@ -320,7 +320,7 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
             autoOn = new SGAutoOnEventNotifier(sgfplib, this);
 
             PendingIntent mPermissionIntent;
-            String ACTION_USB_PERMISSION = "com.fdxpro.secugenfplib.USB_PERMISSION";
+            String ACTION_USB_PERMISSION = "com.secugen.secugen_plugin.USB_PERMISSION";
 
             if (Build.VERSION.SDK_INT >= 34)
                 mPermissionIntent = PendingIntent.getBroadcast(activity.getApplicationContext(), 0, new Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_IMMUTABLE);

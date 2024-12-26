@@ -42,6 +42,7 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
       await methodChannel.invokeMethod(METHOD_TOGGLE_LED, val);
     } on PlatformException catch (e) {
       //exception handling
+      throw _libException(e);
     }
   }
 
@@ -51,6 +52,7 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
       await methodChannel.invokeMethod(METHOD_TOGGLE_SMART_CAPTURE, val);
     } on PlatformException catch (e) {
       //exception handling
+      throw _libException(e);
     }
   }
 
@@ -152,6 +154,8 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
         sgfplibException =
             TemplateMatchingException(message: exception.message);
         break;
+      default:
+        sgfplibException = SgfplibException(message: "Unknown exception");
     }
 
     return sgfplibException;

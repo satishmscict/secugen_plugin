@@ -1,4 +1,4 @@
-const String CHANNEL = 'com.fdxpro.secugenfplib/fingerprintReader';
+const String CHANNEL = 'com.secugen.secugen_plugin/fingerprintReader';
 
 const String METHOD_INIT = 'initializeDevice';
 const String METHOD_TOGGLE_LED = 'toggleLed';
