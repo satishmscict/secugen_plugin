@@ -534,7 +534,7 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
         bitmap.copyPixelsFromBuffer(ByteBuffer.wrap(Bits)); //converting image bytes into bitmap
         return  bitmap;
     }
-    
+
     private byte[] getImageBytes(byte[] buffer,Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
