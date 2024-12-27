@@ -49,6 +49,10 @@ abstract class SecugenPluginPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  Future<bool?> clearAllFiles() {
+    throw UnimplementedError('clearAllFiles() has not been implemented.');
+  }
+
   Future<bool?> initializeDevice() {
     throw UnimplementedError('initializeDevice() has not been implemented.');
   }

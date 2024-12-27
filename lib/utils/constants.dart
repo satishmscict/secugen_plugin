@@ -1,5 +1,6 @@
 const String CHANNEL = 'com.secugen.secugen_plugin/fingerprintReader';
 
+const String METHOD_CLEAR_ALL_FILES = 'clearAllFiles';
 const String METHOD_INIT = 'initializeDevice';
 const String METHOD_TOGGLE_LED = 'toggleLed';
 const String METHOD_TOGGLE_SMART_CAPTURE = 'toggleSmartCapture';

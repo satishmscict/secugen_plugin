@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _secugenfplib = SecugenPlugin();
+  final _secugenPlugin = SecugenPlugin();
 
   int _timeout_ms = 3000, _quality = 80;
 
@@ -207,6 +207,23 @@ class _MyAppState extends State<MyApp> {
                     ],
                   ),
                 ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(1),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.grey[300]),
+                  ),
+                  onPressed: _clearAllFiles,
+                  child: Text(
+                    "CLEAR ALL FILES",
+                    style: TextStyle(
+                      letterSpacing: .65,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -256,8 +273,10 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Widget _actionButton(
-      {required String btnText, required Function()? onPressed}) {
+  Widget _actionButton({
+    required String btnText,
+    required Function()? onPressed,
+  }) {
     return ElevatedButton(
       style: ButtonStyle(
         elevation: MaterialStateProperty.all(1),
@@ -347,7 +366,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _initializeDevice() async {
     try {
-      _isDeviceReady = await _secugenfplib.initializeDevice();
+      _isDeviceReady = await _secugenPlugin.initializeDevice();
     } on SgfplibException catch (e) {
       print(e.message);
       _showAlertDialog(context, e.message!);
@@ -357,11 +376,16 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _toggleLed() async {
-    _secugenfplib.enableLed(_isLedOn!);
+    _secugenPlugin.enableLed(_isLedOn!);
   }
 
   Future<void> _toggleSmartCapture() async {
-    _secugenfplib.enableSmartCapture(_isLedOn!);
+    _secugenPlugin.enableSmartCapture(_isLedOn!);
+  }
+
+  Future<bool?> _clearAllFiles() async {
+    final result = await _secugenPlugin.clearAllFiles();
+    return result;
   }
 
   Future<void> _captureFingerprint(bool isAutoOn) async {
@@ -369,7 +393,7 @@ class _MyAppState extends State<MyApp> {
 
     try {
       final captureResult =
-          await _secugenfplib.captureFingerprint(auto: isAutoOn);
+          await _secugenPlugin.captureFingerprint(auto: isAutoOn);
       _fpImageBytes = captureResult!.imageBytes;
     } on SgfplibException catch (e) {
       print(e.message);
@@ -384,10 +408,12 @@ class _MyAppState extends State<MyApp> {
     _fingerprintMatchString = 'NO STATUS AVAILABLE';
 
     try {
-      final captureResult = await _secugenfplib.captureFingerprintWithQuality(
+      final captureResult = await _secugenPlugin.captureFingerprintWithQuality(
           timeout: _timeout_ms, quality: _quality);
       _fpRegisterBytes = captureResult!.imageBytes;
       _firstCaptureResult = captureResult;
+      debugPrint(
+          "_firstCaptureResult : ${_firstCaptureResult.toString()} \n _firstCaptureResult.imageFilePath ${_firstCaptureResult?.imageFilePath}");
     } on SgfplibException catch (e) {
       print(e.message);
       _showAlertDialog(context, e.message!);
@@ -401,7 +427,7 @@ class _MyAppState extends State<MyApp> {
     _fingerprintMatchString = 'NO STATUS AVAILABLE';
 
     try {
-      final captureResult = await _secugenfplib.captureFingerprintWithQuality(
+      final captureResult = await _secugenPlugin.captureFingerprintWithQuality(
           timeout: _timeout_ms, quality: _quality);
       _fpVerifyBytes = captureResult!.imageBytes;
       _secondCaptureResult = captureResult;
@@ -419,7 +445,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _verifyFingerprints() async {
     try {
-      final result = await _secugenfplib.verifyFingerprint(
+      final result = await _secugenPlugin.verifyFingerprint(
           firstBytes: _firstCaptureResult!.rawBytes!,
           secondBytes: _secondCaptureResult!.rawBytes!);
       _isFingerprintMatched = result;
@@ -435,7 +461,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _getScore() async {
     try {
-      final result = await _secugenfplib.getMatchingScore(
+      final result = await _secugenPlugin.getMatchingScore(
           firstBytes: _firstCaptureResult!.rawBytes!,
           secondBytes: _secondCaptureResult!.rawBytes!);
     } on SgfplibException catch (e) {

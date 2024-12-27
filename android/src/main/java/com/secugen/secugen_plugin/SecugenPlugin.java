@@ -21,6 +21,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +52,7 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
 
     private static final String TAG = "SecuGen Lib";
     private static final String CHANNEL = "com.secugen.secugen_plugin/fingerprintReader";
+    private static final String FINGER_PRINT_DIRECTORY = "FingerPrints";
 
     private static int IMAGE_CAPTURE_TIMEOUT_MS = 5000;
     private static int IMAGE_CAPTURE_QUALITY = 70;
@@ -76,6 +78,7 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
     private MethodChannel.Result initializeResult;
     private MethodChannel.Result captureResult;
 
+    private final String METHOD_CLEAR_ALL_FILES = "clearAllFiles";
     private final String METHOD_INIT = "initializeDevice";
     private final String METHOD_TOGGLE_LED = "toggleLed";
     private final String METHOD_TOGGLE_SMART_CAPTURE = "toggleSmartCapture";
@@ -113,6 +116,10 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
         }
 
         switch(call.method) {
+
+            case METHOD_CLEAR_ALL_FILES:
+                result.success(FileUtils.clearAllFiles(activity.getApplicationContext(),FINGER_PRINT_DIRECTORY) );
+                break;
 
             case METHOD_INIT:
                 initializeResult = result;
@@ -500,19 +507,22 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
             return;
         }
 
-        byte[] imageBytes = getImageBytes(bytes);
+        Bitmap bitmap =toGrayScale(bytes);
+        String filePath = BitmapUtils.saveBitmapToInternalStorage(activity.getApplicationContext(), bitmap, FINGER_PRINT_DIRECTORY+"/"+ System.currentTimeMillis() +".png");
+        Log.i("FingerPrint :: " , "filePath : "+filePath);
+        byte[] imageBytes = getImageBytes(bytes,bitmap);
 
         ArrayList<Object> results = new ArrayList<>();
         results.add(bytes);
         results.add(imageBytes);
         results.add(quality[0]);
+        results.add(filePath);
 
         captureResult.success(results);
         captureResult = null;
     }
 
-    private byte[] getImageBytes(byte[] buffer) {
-
+    public Bitmap toGrayScale(byte[] buffer){
         byte[] Bits = new byte[buffer.length * 4];
 
         for(int i = 0; i < buffer.length; i++) {
@@ -522,7 +532,10 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
 
         Bitmap bitmap = Bitmap.createBitmap(mImageWidth, mImageHeight, Bitmap.Config.ARGB_8888);
         bitmap.copyPixelsFromBuffer(ByteBuffer.wrap(Bits)); //converting image bytes into bitmap
-
+        return  bitmap;
+    }
+    
+    private byte[] getImageBytes(byte[] buffer,Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray(); //converting image bitmap into presentable image bytes

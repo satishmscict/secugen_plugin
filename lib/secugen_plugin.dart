@@ -14,6 +14,10 @@ export 'utils/barrels.dart';
 export 'utils/sgfplib_exception.dart';
 
 class SecugenPlugin {
+  Future<bool?> clearAllFiles() {
+    return SecugenPluginPlatform.instance.clearAllFiles();
+  }
+
   Future<bool?> initializeDevice() {
     return SecugenPluginPlatform.instance.initializeDevice();
   }

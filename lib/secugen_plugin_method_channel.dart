@@ -27,6 +27,17 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
   final methodChannel = const MethodChannel(CHANNEL);
 
   @override
+  Future<bool?> clearAllFiles() async {
+    try {
+      final result =
+          await methodChannel.invokeMethod<bool>(METHOD_CLEAR_ALL_FILES);
+      return result;
+    } on PlatformException catch (e) {
+      throw _libException(e);
+    }
+  }
+
+  @override
   Future<bool?> initializeDevice() async {
     try {
       final result = await methodChannel.invokeMethod<bool>(METHOD_INIT);
@@ -71,7 +82,11 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
       final result =
           await methodChannel.invokeMethod(METHOD_CAPTURE_FINGERPRINT, auto);
       return ImageCaptureResult(
-          rawBytes: result[0], imageBytes: result[1], quality: result[2]);
+        rawBytes: result[0],
+        imageBytes: result[1],
+        quality: result[2],
+        imageFilePath: result[3],
+      );
     } on PlatformException catch (e) {
       throw _libException(e);
     }
@@ -84,7 +99,11 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
       final result = await methodChannel.invokeMethod(
           METHOD_CAPTURE_FINGERPRINT_WITH_QUALITY, [timeout, quality, auto]);
       return ImageCaptureResult(
-          rawBytes: result[0], imageBytes: result[1], quality: result[2]);
+        rawBytes: result[0],
+        imageBytes: result[1],
+        quality: result[2],
+        imageFilePath: result[3],
+      );
     } on PlatformException catch (e) {
       throw _libException(e);
     }
