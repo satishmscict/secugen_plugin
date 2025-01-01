@@ -5,7 +5,35 @@ import 'package:flutter/services.dart';
 import 'package:secugen_plugin/secugen_plugin.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MaterialApp(home: const FirstScreen()));
+}
+
+class FirstScreen extends StatelessWidget {
+  const FirstScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Demo"),
+      ),
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MyApp()),
+              );
+            },
+            child: Text(
+              "Biometric Demo",
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -39,8 +67,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -229,7 +256,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-    ));
+    );
   }
 
   Widget _deviceStatus() {

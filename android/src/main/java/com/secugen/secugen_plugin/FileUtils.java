@@ -55,7 +55,7 @@ public class FileUtils {
     public static boolean clearAllFiles(@NonNull Context context,String directoryName) {
         boolean isDeleted = deleteSubdirectory(context, directoryName);
         if (isDeleted) {
-            Log.d("DeleteDir", "Successfully deleted xyz directory.");
+            Log.d("DeleteDir", "Successfully deleted "+ directoryName +" directory.");
         } else {
             Log.e("DeleteDir", "Failed to delete some or all contents of xyz directory.");
         }

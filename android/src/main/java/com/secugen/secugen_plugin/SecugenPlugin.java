@@ -323,7 +323,9 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
     private void initializeDevice() {
 
         try {
-            sgfplib = new JSGFPLib(activity.getApplicationContext(), (UsbManager) activity.getApplicationContext().getSystemService(Context.USB_SERVICE));
+            if(sgfplib == null){
+                sgfplib = new JSGFPLib(activity.getApplicationContext(), (UsbManager) activity.getApplicationContext().getSystemService(Context.USB_SERVICE));
+            }
             autoOn = new SGAutoOnEventNotifier(sgfplib, this);
 
             PendingIntent mPermissionIntent;
@@ -391,7 +393,7 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
             error = sgfplib.OpenDevice(0);
 
             if(error == SGFDxErrorCode.SGFDX_ERROR_NONE) {
-                Log.e(TAG, "Error Noneeee");
+                Log.e(TAG, "Error None");
                 isDeviceInitialized = true;
                 SecuGen.FDxSDKPro.SGDeviceInfoParam deviceInfo = new SecuGen.FDxSDKPro.SGDeviceInfoParam();
                 sgfplib.GetDeviceInfo(deviceInfo); //getting secugen usb device info
@@ -420,6 +422,7 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
         }
         catch (Exception e) {
             //result already returned
+            Log.e("initializeDevice","Error info : "+e.getMessage());
         }
     }
 
