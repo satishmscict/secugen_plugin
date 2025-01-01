@@ -1,6 +1,6 @@
 name: secugen_plugin
 description: "A new Flutter plugin to connect with Secugen device and access all the device features."
-version: 1.1.0
+version: 1.1.1
 repository: https://github.com/satishmscict/secugen_plugin
 homepage: https://github.com/satishmscict/secugen_plugin
 
