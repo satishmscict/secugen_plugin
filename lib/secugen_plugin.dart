@@ -38,21 +38,35 @@ class SecugenPlugin {
     return SecugenPluginPlatform.instance.captureFingerprint(auto);
   }
 
-  Future<ImageCaptureResult?> captureFingerprintWithQuality(
-      {required int timeout, required int quality, bool auto = false}) async {
-    return SecugenPluginPlatform.instance
-        .captureFingerprintWithQuality(timeout, quality, auto);
+  Future<ImageCaptureResult?> captureFingerprintWithQuality({
+    required int timeout,
+    required int quality,
+    bool auto = false,
+  }) async {
+    return SecugenPluginPlatform.instance.captureFingerprintWithQuality(
+      timeout = timeout,
+      quality = quality,
+      auto = auto,
+    );
   }
 
-  Future<bool?> verifyFingerprint(
-      {required Uint8List firstBytes, required Uint8List secondBytes}) async {
-    return SecugenPluginPlatform.instance
-        .verifyFingerprint(firstBytes, secondBytes);
+  Future<bool?> verifyFingerprint({
+    required Uint8List firstBytes,
+    required Uint8List secondBytes,
+  }) async {
+    return SecugenPluginPlatform.instance.verifyFingerprint(
+      firstBytes = firstBytes,
+      secondBytes = secondBytes,
+    );
   }
 
-  Future<int?> getMatchingScore(
-      {required Uint8List firstBytes, required Uint8List secondBytes}) async {
-    return SecugenPluginPlatform.instance
-        .getMatchingScore(firstBytes, secondBytes);
+  Future<int?> getMatchingScore({
+    required Uint8List firstBytes,
+    required Uint8List secondBytes,
+  }) async {
+    return SecugenPluginPlatform.instance.getMatchingScore(
+      firstBytes = firstBytes,
+      secondBytes = secondBytes,
+    );
   }
 }

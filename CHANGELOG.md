@@ -1,4 +1,10 @@
+## 1.2.1
+
+* Resolved the Android 16 KB memory page size limit issue.
+* Updated all .so files to the latest version.
+
 ## 1.1.1
+
 * Device Connection Issue Fixed: Resolved the issue where the fingerprint device was connecting only the first time the application was opened, and failing to reconnect on subsequent launches.
 
 ## 1.1.0

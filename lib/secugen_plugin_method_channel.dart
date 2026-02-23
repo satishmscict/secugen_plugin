@@ -29,8 +29,7 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
   @override
   Future<bool?> clearAllFiles() async {
     try {
-      final result =
-          await methodChannel.invokeMethod<bool>(METHOD_CLEAR_ALL_FILES);
+      final result = await methodChannel.invokeMethod<bool>(METHOD_CLEAR_ALL_FILES);
       return result;
     } on PlatformException catch (e) {
       throw _libException(e);
@@ -79,8 +78,10 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
   @override
   Future<ImageCaptureResult?> captureFingerprint(bool auto) async {
     try {
-      final result =
-          await methodChannel.invokeMethod(METHOD_CAPTURE_FINGERPRINT, auto);
+      final result = await methodChannel.invokeMethod(
+        METHOD_CAPTURE_FINGERPRINT,
+        auto,
+      );
       return ImageCaptureResult(
         rawBytes: result[0],
         imageBytes: result[1],
@@ -96,8 +97,11 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
   Future<ImageCaptureResult?> captureFingerprintWithQuality(
       int timeout, int quality, bool auto) async {
     try {
-      final result = await methodChannel.invokeMethod(
-          METHOD_CAPTURE_FINGERPRINT_WITH_QUALITY, [timeout, quality, auto]);
+      final result = await methodChannel.invokeMethod(METHOD_CAPTURE_FINGERPRINT_WITH_QUALITY, [
+        timeout,
+        quality,
+        auto,
+      ]);
       return ImageCaptureResult(
         rawBytes: result[0],
         imageBytes: result[1],
@@ -111,10 +115,17 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
 
   @override
   Future<bool?> verifyFingerprint(
-      Uint8List firstBytes, Uint8List secondBytes) async {
+    Uint8List firstBytes,
+    Uint8List secondBytes,
+  ) async {
     try {
       final result = await methodChannel.invokeMethod<bool>(
-          METHOD_VERIFY_FINGERPRINT, [firstBytes, secondBytes]);
+        METHOD_VERIFY_FINGERPRINT,
+        [
+          firstBytes,
+          secondBytes,
+        ],
+      );
       return result;
     } on PlatformException catch (e) {
       throw _libException(e);
@@ -122,11 +133,12 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
   }
 
   @override
-  Future<int?> getMatchingScore(
-      Uint8List firstBytes, Uint8List secondBytes) async {
+  Future<int?> getMatchingScore(Uint8List firstBytes, Uint8List secondBytes) async {
     try {
       final result = await methodChannel.invokeMethod<int>(
-          METHOD_GET_MATCHING_SCORE, [firstBytes, secondBytes]);
+        METHOD_GET_MATCHING_SCORE,
+        [firstBytes, secondBytes],
+      );
       return result;
     } on PlatformException catch (e) {
       throw _libException(e);
@@ -138,13 +150,11 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
 
     switch (exception.code) {
       case ERROR_NOT_SUPPORTED:
-        sgfplibException =
-            DeviceNotSupportedException(message: exception.message);
+        sgfplibException = DeviceNotSupportedException(message: exception.message);
         break;
 
       case ERROR_INITIALIZATION_FAILED:
-        sgfplibException =
-            InitializationFailedException(message: exception.message);
+        sgfplibException = InitializationFailedException(message: exception.message);
         break;
 
       case ERROR_SENSOR_NOT_FOUND:
@@ -152,8 +162,7 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
         break;
 
       case ERROR_SMART_CAPTURE_ENABLED:
-        sgfplibException =
-            SmartCaptureEnabledException(message: exception.message);
+        sgfplibException = SmartCaptureEnabledException(message: exception.message);
         break;
 
       case ERROR_OUT_OF_RANGE:
@@ -165,13 +174,13 @@ class MethodChannelSecugenPlugin extends SecugenPluginPlatform {
         break;
 
       case ERROR_TEMPLATE_INITIALIZE_FAILED:
-        sgfplibException =
-            TemplateInitializationException(message: exception.message);
+        sgfplibException = TemplateInitializationException(
+          message: exception.message,
+        );
         break;
 
       case ERROR_TEMPLATE_MATCHING_FAILED:
-        sgfplibException =
-            TemplateMatchingException(message: exception.message);
+        sgfplibException = TemplateMatchingException(message: exception.message);
         break;
       default:
         sgfplibException = SgfplibException(message: "Unknown exception");

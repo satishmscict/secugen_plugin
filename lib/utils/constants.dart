@@ -6,8 +6,7 @@ const String METHOD_TOGGLE_LED = 'toggleLed';
 const String METHOD_TOGGLE_SMART_CAPTURE = 'toggleSmartCapture';
 const String METHOD_SET_BRIGHTNESS = 'setBrightness';
 const String METHOD_CAPTURE_FINGERPRINT = 'captureFingerprint';
-const String METHOD_CAPTURE_FINGERPRINT_WITH_QUALITY =
-    'captureFingerprintWithQuality';
+const String METHOD_CAPTURE_FINGERPRINT_WITH_QUALITY = 'captureFingerprintWithQuality';
 const String METHOD_VERIFY_FINGERPRINT = 'verifyFingerprint';
 const String METHOD_GET_MATCHING_SCORE = 'getMatchingScore';
 

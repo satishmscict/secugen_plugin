@@ -138,15 +138,11 @@ class _MyAppState extends State<MyApp> {
                           children: [
                             _actionButton(
                               btnText: 'CAPTURE (AUTO ON)',
-                              onPressed: () => _isDeviceReady!
-                                  ? _captureFingerprint(true)
-                                  : null,
+                              onPressed: () => _isDeviceReady! ? _captureFingerprint(true) : null,
                             ),
                             _actionButton(
                               btnText: 'CAPTURE (AUTO OFF)',
-                              onPressed: () => _isDeviceReady!
-                                  ? _captureFingerprint(false)
-                                  : null,
+                              onPressed: () => _isDeviceReady! ? _captureFingerprint(false) : null,
                             ),
                             _switchButton(
                               switchVal: _isLedOn!,
@@ -163,8 +159,7 @@ class _MyAppState extends State<MyApp> {
                               switchText: 'Smart Capture',
                               onSwitch: _isDeviceReady!
                                   ? (val) {
-                                      setState(
-                                          () => _smartCaptureEnabled = val);
+                                      setState(() => _smartCaptureEnabled = val);
                                       _toggleSmartCapture();
                                     }
                                   : null,
@@ -201,9 +196,7 @@ class _MyAppState extends State<MyApp> {
                             ),
                             _actionButton(
                               btnText: 'REGISTER FINGER',
-                              onPressed: () => _isDeviceReady!
-                                  ? _captureFirstFinger()
-                                  : null,
+                              onPressed: () => _isDeviceReady! ? _captureFirstFinger() : null,
                             ),
                           ],
                         ),
@@ -224,9 +217,7 @@ class _MyAppState extends State<MyApp> {
                             ),
                             _actionButton(
                               btnText: 'VERIFY FINGER',
-                              onPressed: () => _isDeviceReady!
-                                  ? _captureSecondFinger()
-                                  : null,
+                              onPressed: () => _isDeviceReady! ? _captureSecondFinger() : null,
                             ),
                           ],
                         ),
@@ -237,8 +228,7 @@ class _MyAppState extends State<MyApp> {
                 ElevatedButton(
                   style: ButtonStyle(
                     elevation: MaterialStateProperty.all(1),
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.grey[300]),
+                    backgroundColor: MaterialStateProperty.all(Colors.grey[300]),
                   ),
                   onPressed: _clearAllFiles,
                   child: Text(
@@ -294,9 +284,7 @@ class _MyAppState extends State<MyApp> {
       width: double.infinity,
       height: MediaQuery.of(context).size.height * .25,
       color: Colors.grey[200],
-      child: imageBytes == null
-          ? SizedBox()
-          : Image.memory(imageBytes, fit: BoxFit.contain),
+      child: imageBytes == null ? SizedBox() : Image.memory(imageBytes, fit: BoxFit.contain),
     );
   }
 
@@ -323,9 +311,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _switchButton(
-      {required bool switchVal,
-      required String switchText,
-      required Function(bool)? onSwitch}) {
+      {required bool switchVal, required String switchText, required Function(bool)? onSwitch}) {
     return SwitchListTile(
       value: switchVal,
       onChanged: onSwitch,
@@ -376,8 +362,7 @@ class _MyAppState extends State<MyApp> {
 
   void _setControls() {
     _fingerprintMatchString = 'NO STATUS AVAILABLE';
-    _isFingerprintMatched =
-        _fpImageBytes = _fpRegisterBytes = _fpVerifyBytes = null;
+    _isFingerprintMatched = _fpImageBytes = _fpRegisterBytes = _fpVerifyBytes = null;
 
     if (_isDeviceReady!) {
       _isLedOn = false;
@@ -419,8 +404,7 @@ class _MyAppState extends State<MyApp> {
     _fpImageBytes = null;
 
     try {
-      final captureResult =
-          await _secugenPlugin.captureFingerprint(auto: isAutoOn);
+      final captureResult = await _secugenPlugin.captureFingerprint(auto: isAutoOn);
       _fpImageBytes = captureResult!.imageBytes;
     } on SgfplibException catch (e) {
       print(e.message);
@@ -473,11 +457,9 @@ class _MyAppState extends State<MyApp> {
   Future<void> _verifyFingerprints() async {
     try {
       final result = await _secugenPlugin.verifyFingerprint(
-          firstBytes: _firstCaptureResult!.rawBytes!,
-          secondBytes: _secondCaptureResult!.rawBytes!);
+          firstBytes: _firstCaptureResult!.rawBytes!, secondBytes: _secondCaptureResult!.rawBytes!);
       _isFingerprintMatched = result;
-      _fingerprintMatchString =
-          _isFingerprintMatched! ? 'MATCHED' : 'NOT MATCHED';
+      _fingerprintMatchString = _isFingerprintMatched! ? 'MATCHED' : 'NOT MATCHED';
     } on SgfplibException catch (e) {
       print(e.message);
       _showAlertDialog(context, e.message!);
@@ -489,8 +471,9 @@ class _MyAppState extends State<MyApp> {
   Future<void> _getScore() async {
     try {
       final result = await _secugenPlugin.getMatchingScore(
-          firstBytes: _firstCaptureResult!.rawBytes!,
-          secondBytes: _secondCaptureResult!.rawBytes!);
+        firstBytes: _firstCaptureResult!.rawBytes!,
+        secondBytes: _secondCaptureResult!.rawBytes!,
+      );
     } on SgfplibException catch (e) {
       print(e.message);
       _showAlertDialog(context, e.message!);

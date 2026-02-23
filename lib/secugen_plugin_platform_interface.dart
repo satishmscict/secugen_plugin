@@ -74,9 +74,11 @@ abstract class SecugenPluginPlatform extends PlatformInterface {
   }
 
   Future<ImageCaptureResult?> captureFingerprintWithQuality(
-      int timeout, int quality, bool auto) {
-    throw UnimplementedError(
-        'captureFingerprintWithQuality() has not been implemented.');
+    int timeout,
+    int quality,
+    bool auto,
+  ) {
+    throw UnimplementedError('captureFingerprintWithQuality() has not been implemented.');
   }
 
   Future<bool?> verifyFingerprint(Uint8List firstBytes, Uint8List secondBytes) {
