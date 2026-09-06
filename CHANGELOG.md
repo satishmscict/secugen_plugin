@@ -1,3 +1,12 @@
+## 1.3.0
+
+* Updated Android and example project configuration for Flutter 3.47+ compatibility.
+* Fixed standalone example release build by removing stale generated plugin registrant source.
+* Updated Java/Kotlin compile targets to Java 17 to support modern Android toolchains.
+* Added and repaired plugin tests for the current SecuGen public API and method channel behavior.
+* Cleaned Dart wrapper forwarding and exception constructors for maintainability.
+* Added repository ignore rules for generated Flutter/build artifacts.
+
 ## 1.2.1
 
 * Resolved the Android 16 KB memory page size limit issue.

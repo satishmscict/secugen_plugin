@@ -2,7 +2,7 @@ group = "com.secugen.secugen_plugin"
 version = "1.0-SNAPSHOT"
 
 buildscript {
-    ext.kotlin_version = "1.7.10"
+    ext.kotlin_version = "2.2.20"
     repositories {
         google()
         mavenCentral()
@@ -29,15 +29,15 @@ android {
         namespace = "com.secugen.secugen_plugin"
     }
 
-    compileSdk = 35
+    compileSdk = 36
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_17
     }
 
     sourceSets {
@@ -46,7 +46,7 @@ android {
     }
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 24
     }
 
     packagingOptions {

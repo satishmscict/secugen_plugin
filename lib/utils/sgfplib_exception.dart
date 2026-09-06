@@ -5,33 +5,33 @@ class SgfplibException implements Exception {
 }
 
 class DeviceNotSupportedException extends SgfplibException {
-  DeviceNotSupportedException({required message}) : super(message: message);
+  DeviceNotSupportedException({required super.message});
 }
 
 class InitializationFailedException extends SgfplibException {
-  InitializationFailedException({required message}) : super(message: message);
+  InitializationFailedException({required super.message});
 }
 
 class SensorNotFoundException extends SgfplibException {
-  SensorNotFoundException({required message}) : super(message: message);
+  SensorNotFoundException({required super.message});
 }
 
 class SmartCaptureEnabledException extends SgfplibException {
-  SmartCaptureEnabledException({required message}) : super(message: message);
+  SmartCaptureEnabledException({required super.message});
 }
 
 class OutOfRangeException extends SgfplibException {
-  OutOfRangeException({required message}) : super(message: message);
+  OutOfRangeException({required super.message});
 }
 
 class NoFingerprintException extends SgfplibException {
-  NoFingerprintException({required message}) : super(message: message);
+  NoFingerprintException({required super.message});
 }
 
 class TemplateInitializationException extends SgfplibException {
-  TemplateInitializationException({required message}) : super(message: message);
+  TemplateInitializationException({required super.message});
 }
 
 class TemplateMatchingException extends SgfplibException {
-  TemplateMatchingException({required message}) : super(message: message);
+  TemplateMatchingException({required super.message});
 }

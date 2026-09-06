@@ -1,13 +1,6 @@
-// class SecugenPlugin {
-//   Future<String?> getPlatformVersion() {
-//     return SecugenPluginPlatform.instance.getPlatformVersion();
-//   }
-// }
-
 import 'dart:typed_data';
 
 import 'secugen_plugin_platform_interface.dart';
-//import 'SecugenPlugin_platform_interface.dart';
 import 'utils/barrels.dart';
 
 export 'utils/barrels.dart';
@@ -44,9 +37,9 @@ class SecugenPlugin {
     bool auto = false,
   }) async {
     return SecugenPluginPlatform.instance.captureFingerprintWithQuality(
-      timeout = timeout,
-      quality = quality,
-      auto = auto,
+      timeout,
+      quality,
+      auto,
     );
   }
 
@@ -55,8 +48,8 @@ class SecugenPlugin {
     required Uint8List secondBytes,
   }) async {
     return SecugenPluginPlatform.instance.verifyFingerprint(
-      firstBytes = firstBytes,
-      secondBytes = secondBytes,
+      firstBytes,
+      secondBytes,
     );
   }
 
@@ -65,8 +58,8 @@ class SecugenPlugin {
     required Uint8List secondBytes,
   }) async {
     return SecugenPluginPlatform.instance.getMatchingScore(
-      firstBytes = firstBytes,
-      secondBytes = secondBytes,
+      firstBytes,
+      secondBytes,
     );
   }
 }

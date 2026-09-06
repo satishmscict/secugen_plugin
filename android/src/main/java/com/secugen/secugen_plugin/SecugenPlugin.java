@@ -46,7 +46,6 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.EventChannel;
-import io.flutter.plugin.common.PluginRegistry;
 
 public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware, SGFingerPresentEvent {
 
@@ -165,7 +164,7 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
     @Override
     public void onAttachedToActivity(final ActivityPluginBinding binding) {
         setup(this.pluginBinding.getBinaryMessenger(), (Application) this.pluginBinding.getApplicationContext(),
-                binding.getActivity(), null, binding);
+                binding.getActivity(), binding);
     }
 
     @Override
@@ -183,25 +182,8 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
         tearDown();
     }
 
-    public static void registerWith(final io.flutter.plugin.common.PluginRegistry.Registrar registrar) {
-
-        if(registrar.activity() == null) {
-            return;
-        }
-
-        final Activity activity = registrar.activity();
-        Application application = null;
-
-        if(registrar.context() != null) {
-            application = (Application) (registrar.context().getApplicationContext());
-        }
-
-        final SecugenPlugin plugin = new SecugenPlugin();
-        plugin.setup(registrar.messenger(), application, activity, registrar, null);
-    }
-
     private void setup(final BinaryMessenger messenger, final Application application, final Activity activity,
-                       final PluginRegistry.Registrar registrar, final ActivityPluginBinding activityBinding) {
+                       final ActivityPluginBinding activityBinding) {
 
         this.activity = activity;
         this.application = application;
@@ -211,25 +193,21 @@ public class SecugenPlugin implements FlutterPlugin, MethodChannel.MethodCallHan
 
         this.observer = new LifeCycleObserver(activity);
 
-        if(registrar != null) {
-            application.registerActivityLifecycleCallbacks(this.observer);
-        }
-        else {
-            this.lifecycle = FlutterLifecycleAdapter.getActivityLifecycle(activityBinding);
-            this.lifecycle.addObserver(this.observer);
-        }
+        this.lifecycle = FlutterLifecycleAdapter.getActivityLifecycle(activityBinding);
+        this.lifecycle.addObserver(this.observer);
     }
 
     private void tearDown() {
 
-        if(this.observer != null) {
+        if(this.observer != null && this.lifecycle != null) {
             this.lifecycle.removeObserver(this.observer);
-            this.application.unregisterActivityLifecycleCallbacks(this.observer);
         }
 
         this.lifecycle = null;
         this.application = null;
-        this.channel.setMethodCallHandler(null);
+        if(this.channel != null) {
+            this.channel.setMethodCallHandler(null);
+        }
         this.channel = null;
     }
 
